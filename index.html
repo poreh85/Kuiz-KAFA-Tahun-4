@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuiz KAFA Tahun 4</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eaf7ef;
+  text-align: center;
+  padding: 20px;
+}
+h1 { color: #176b43; }
+button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: 0;
+  border-radius: 12px;
+  background: #198754;
+  color: white;
+  font-size: 17px;
+}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📚 Kuiz KAFA Tahun 4</h1>
+<p id="question"></p>
+<div id="answers"></div>
+<p id="result"></p>
+<p id="score"></p>
+<button onclick="restart()">Mula Semula</button>
+</div>
+<script>
+const questions = [
+ {
+  q:"Berapakah rukun Islam?",
+  a:["4","5","6","7"],
+  correct:1
+ },
+ {
+  q:"Siapakah nabi terakhir?",
+  a:["Nabi Musa","Nabi Isa","Nabi Muhammad","Nabi Adam"],
+  correct:2
+ },
+ {
+  q:"Apakah kitab yang diturunkan kepada Nabi Muhammad SAW?",
+  a:["Taurat","Zabur","Injil","Al-Quran"],
+  correct:3
+ }
+];
+let index=0, score=0;
+function showQuestion(){
+ if(index>=questions.length){
+  document.getElementById("question").innerText="Kuiz Tamat!";
+  document.getElementById("answers").innerHTML="";
+  document.getElementById("score").innerText=
+    "Markah: "+score+"/"+questions.length;
+  return;
+ }
+ const item=questions[index];
+ document.getElementById("question").innerText=item.q;
+ document.getElementById("result").innerText="";
+ document.getElementById("answers").innerHTML="";
+ item.a.forEach((answer,i)=>{
+  const btn=document.createElement("button");
+  btn.innerText=answer;
+  btn.onclick=()=>{
+   if(i===item.correct) score++;
+   document.getElementById("result").innerText=
+     i===item.correct?"✅ Betul!":"❌ Salah!";
+   document.querySelectorAll("#answers button")
+     .forEach(b=>b.disabled=true);
+   setTimeout(()=>{
+    index++;
+    showQuestion();
+   },900);
+  };
+  document.getElementById("answers").appendChild(btn);
+ });
+}
+function restart(){
+ index=0;score=0;
+ document.getElementById("score").innerText="";
+ showQuestion();
+}
+showQuestion();
+</script>
+</body>
+</html>
