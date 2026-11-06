@@ -1,0 +1,1283 @@
+<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kuiz KAFA Tahun 4</title><style>*{box-sizing:border-box}body{margin:0;background:#eaf6ee;color:#163c2b;font-family:Arial,sans-serif}main{max-width:650px;margin:24px auto;padding:18px}.panel{background:white;border-radius:22px;padding:24px;box-shadow:0 8px 30px #165b3020}h1{margin:0 0 8px;color:#12663b}p{line-height:1.5}button{font:inherit;border:0;border-radius:12px;padding:14px;cursor:pointer}button:disabled{opacity:.7;cursor:default}.subject,.answer,.primary{display:block;width:100%;margin:10px 0;text-align:left}.subject{background:#e4f4e9;color:#174b31}.answer{background:#f2f5f3;color:#1c3026;border:2px solid transparent}.answer.correct{background:#d5f7df;border-color:#16803f}.answer.wrong{background:#ffe0df;border-color:#bb3939}.primary{background:#16834b;color:white;text-align:center;font-weight:bold}.muted{color:#5b7365}.top{display:flex;justify-content:space-between;gap:8px;align-items:center}.pill{background:#e4f4e9;padding:8px 12px;border-radius:50px;font-size:13px}.hidden{display:none}.feedback{font-weight:bold;min-height:24px}footer{font-size:12px;text-align:center;color:#65806f;margin:16px}</style></head><body><main><div class="panel"><div class="top"><span class="pill">📚 Latihan KAFA Tahun 4</span><span id="progress" class="muted"></span></div><h1 id="title">Pilih Mata Pelajaran</h1><p id="description" class="muted">Pilih subjek untuk memulakan kuiz. 30 soalan latihan pelbagai tahap bagi setiap subjek.</p><div id="content"></div><p id="feedback" class="feedback" aria-live="polite"></p><button id="next" class="primary hidden">Soalan Seterusnya →</button><button id="home" class="primary hidden">← Pilih Subjek</button></div><footer>Soalan latihan umum untuk ulang kaji; semak kesesuaian dengan silibus sekolah.</footer></main><script>
+// Setiap soalan: [soalan, jawapan betul, pilihan salah 1, pilihan salah 2, pilihan salah 3]
+const bank={
+ "Akidah": [
+  [
+   "Berapakah rukun iman?",
+   "6",
+   "5",
+   "4",
+   "7"
+  ],
+  [
+   "Siapakah malaikat yang menyampaikan wahyu?",
+   "Jibril",
+   "Mikail",
+   "Israfil",
+   "Malik"
+  ],
+  [
+   "Apakah maksud beriman kepada Allah?",
+   "Meyakini kewujudan dan keesaan Allah",
+   "Mempercayai banyak tuhan",
+   "Menyembah makhluk",
+   "Mengabaikan perintah Allah"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Musa AS?",
+   "Taurat",
+   "Injil",
+   "Zabur",
+   "Al-Quran"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Isa AS?",
+   "Injil",
+   "Taurat",
+   "Zabur",
+   "Suhuf"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Daud AS?",
+   "Zabur",
+   "Injil",
+   "Taurat",
+   "Al-Quran"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Muhammad SAW?",
+   "Al-Quran",
+   "Taurat",
+   "Injil",
+   "Zabur"
+  ],
+  [
+   "Apakah maksud sifat wajib Allah 'Wujud'?",
+   "Ada",
+   "Baharu",
+   "Binasa",
+   "Lemah"
+  ],
+  [
+   "Apakah lawan sifat 'Baqa'?",
+   "Fana",
+   "Qidam",
+   "Wujud",
+   "Ilmu"
+  ],
+  [
+   "Apakah rukun iman yang terakhir?",
+   "Beriman kepada qada dan qadar",
+   "Beriman kepada malaikat",
+   "Beriman kepada kitab",
+   "Beriman kepada rasul"
+  ],
+  [
+   "Apakah maksud tauhid?",
+   "Mengesakan Allah",
+   "Menyembah berhala",
+   "Memuja makhluk",
+   "Mempercayai banyak tuhan"
+  ],
+  [
+   "Apakah lawan bagi sifat wajib Allah, Wujud?",
+   "Adam",
+   "Baqa",
+   "Qidam",
+   "Qudrat"
+  ],
+  [
+   "Apakah maksud sifat Qidam bagi Allah?",
+   "Tiada permulaan",
+   "Tiada pengakhiran",
+   "Maha Mendengar",
+   "Maha Melihat"
+  ],
+  [
+   "Apakah maksud sifat Baqa bagi Allah?",
+   "Kekal",
+   "Baharu",
+   "Lemah",
+   "Berubah"
+  ],
+  [
+   "Apakah maksud sifat Qudrat bagi Allah?",
+   "Maha Berkuasa",
+   "Maha Mendengar",
+   "Maha Melihat",
+   "Maha Mengetahui"
+  ],
+  [
+   "Apakah maksud sifat Iradat bagi Allah?",
+   "Maha Berkehendak",
+   "Maha Hidup",
+   "Maha Esa",
+   "Maha Berkata-kata"
+  ],
+  [
+   "Apakah maksud sifat Ilmu bagi Allah?",
+   "Maha Mengetahui",
+   "Maha Berkuasa",
+   "Maha Mendengar",
+   "Maha Melihat"
+  ],
+  [
+   "Apakah maksud sifat Sama' bagi Allah?",
+   "Maha Mendengar",
+   "Maha Melihat",
+   "Maha Berkata-kata",
+   "Maha Berkehendak"
+  ],
+  [
+   "Apakah maksud sifat Basar bagi Allah?",
+   "Maha Melihat",
+   "Maha Mendengar",
+   "Maha Hidup",
+   "Maha Esa"
+  ],
+  [
+   "Apakah maksud sifat Hayat bagi Allah?",
+   "Maha Hidup",
+   "Maha Berkehendak",
+   "Maha Mengetahui",
+   "Maha Berkuasa"
+  ],
+  [
+   "Apakah maksud sifat Wahdaniyyah bagi Allah?",
+   "Maha Esa",
+   "Maha Kaya",
+   "Maha Mendengar",
+   "Maha Melihat"
+  ],
+  [
+   "Apakah lawan bagi sifat Qudrat?",
+   "Ajz",
+   "Jahl",
+   "Maut",
+   "Samam"
+  ],
+  [
+   "Apakah lawan bagi sifat Ilmu?",
+   "Jahl",
+   "Ajz",
+   "Bukm",
+   "Umy"
+  ],
+  [
+   "Apakah lawan bagi sifat Hayat?",
+   "Maut",
+   "Jahl",
+   "Ajz",
+   "Adam"
+  ],
+  [
+   "Siapakah malaikat yang meniup sangkakala?",
+   "Israfil",
+   "Jibril",
+   "Mikail",
+   "Ridwan"
+  ],
+  [
+   "Siapakah malaikat yang menjaga neraka?",
+   "Malik",
+   "Ridwan",
+   "Jibril",
+   "Mikail"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Musa AS?",
+   "Taurat",
+   "Injil",
+   "Zabur",
+   "Al-Quran"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Isa AS?",
+   "Injil",
+   "Taurat",
+   "Zabur",
+   "Al-Quran"
+  ],
+  [
+   "Apakah kitab yang diturunkan kepada Nabi Daud AS?",
+   "Zabur",
+   "Injil",
+   "Taurat",
+   "Al-Quran"
+  ],
+  [
+   "Apakah maksud beriman kepada hari akhirat?",
+   "Meyakini adanya kehidupan selepas mati",
+   "Mempercayai dunia kekal",
+   "Menolak kebangkitan",
+   "Mempercayai manusia tidak dihisab"
+  ]
+ ],
+ "Ibadah": [
+  [
+   "Berapakah rukun Islam?",
+   "5",
+   "4",
+   "6",
+   "7"
+  ],
+  [
+   "Berapa kali solat fardu sehari semalam?",
+   "5",
+   "3",
+   "4",
+   "6"
+  ],
+  [
+   "Berapakah rakaat solat Subuh?",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  [
+   "Berapakah rakaat solat Maghrib?",
+   "3",
+   "2",
+   "4",
+   "5"
+  ],
+  [
+   "Apakah syarat bersuci sebelum solat?",
+   "Suci daripada hadas dan najis",
+   "Memakai kasut",
+   "Makan dahulu",
+   "Tidur dahulu"
+  ],
+  [
+   "Apakah arah kiblat umat Islam?",
+   "Kaabah",
+   "Masjid Nabawi",
+   "Bukit Uhud",
+   "Masjid Al-Aqsa"
+  ],
+  [
+   "Apakah nama bulan umat Islam diwajibkan berpuasa?",
+   "Ramadan",
+   "Syawal",
+   "Rejab",
+   "Muharam"
+  ],
+  [
+   "Apakah alat bersuci untuk tayamum?",
+   "Debu tanah yang suci",
+   "Air laut sahaja",
+   "Minyak",
+   "Daun"
+  ],
+  [
+   "Apakah perbuatan pertama dalam solat selepas niat?",
+   "Takbiratul ihram",
+   "Sujud",
+   "Tahiyat akhir",
+   "Salam"
+  ],
+  [
+   "Berapakah rakaat solat Isyak?",
+   "4",
+   "2",
+   "3",
+   "5"
+  ],
+  [
+   "Apakah syarat wajib solat yang berkaitan umur dan kematangan?",
+   "Baligh",
+   "Kaya",
+   "Berkahwin",
+   "Bekerja"
+  ],
+  [
+   "Apakah arah kiblat umat Islam?",
+   "Kaabah di Makkah",
+   "Masjid Nabawi",
+   "Masjid al-Aqsa",
+   "Bukit Arafah"
+  ],
+  [
+   "Apakah nama solat fardu dua rakaat pada waktu pagi?",
+   "Subuh",
+   "Zuhur",
+   "Asar",
+   "Maghrib"
+  ],
+  [
+   "Berapakah rakaat solat Zuhur?",
+   "4",
+   "2",
+   "3",
+   "5"
+  ],
+  [
+   "Berapakah rakaat solat Maghrib?",
+   "3",
+   "2",
+   "4",
+   "5"
+  ],
+  [
+   "Berapakah rakaat solat Isyak?",
+   "4",
+   "2",
+   "3",
+   "5"
+  ],
+  [
+   "Apakah ibadah yang didahului dengan niat dan takbiratul ihram?",
+   "Solat",
+   "Zakat",
+   "Puasa",
+   "Sedekah"
+  ],
+  [
+   "Apakah rukun solat yang dilakukan selepas takbiratul ihram ketika berdiri?",
+   "Membaca al-Fatihah",
+   "Memberi salam",
+   "Sujud",
+   "Duduk tahiyat akhir"
+  ],
+  [
+   "Apakah bacaan wajib dalam setiap rakaat solat bagi yang mampu?",
+   "Surah al-Fatihah",
+   "Doa iftitah",
+   "Surah al-Ikhlas",
+   "Doa qunut"
+  ],
+  [
+   "Apakah yang membatalkan wuduk?",
+   "Keluar sesuatu dari qubul atau dubur",
+   "Membaca al-Quran",
+   "Berzikir",
+   "Memakai kopiah"
+  ],
+  [
+   "Apakah anggota wuduk yang wajib disapu?",
+   "Sebahagian kepala",
+   "Kedua-dua telinga",
+   "Leher",
+   "Bahu"
+  ],
+  [
+   "Apakah anggota yang dibasuh hingga siku ketika berwuduk?",
+   "Kedua-dua tangan",
+   "Kedua-dua kaki",
+   "Muka",
+   "Kepala"
+  ],
+  [
+   "Apakah maksud tayamum?",
+   "Bersuci menggunakan debu tanah yang suci",
+   "Mandi dengan air",
+   "Menyapu minyak",
+   "Membasuh pakaian"
+  ],
+  [
+   "Bilakah tayamum boleh menggantikan wuduk?",
+   "Apabila tiada air atau tidak boleh menggunakannya kerana uzur syarie",
+   "Apabila malas berwuduk",
+   "Apabila tergesa-gesa tanpa uzur",
+   "Apabila air sejuk sedikit"
+  ],
+  [
+   "Apakah bulan umat Islam diwajibkan berpuasa?",
+   "Ramadan",
+   "Syawal",
+   "Muharam",
+   "Rejab"
+  ],
+  [
+   "Bilakah waktu bermula puasa Ramadan setiap hari?",
+   "Terbit fajar sadiq",
+   "Terbit matahari",
+   "Masuk waktu Zuhur",
+   "Masuk waktu Asar"
+  ],
+  [
+   "Bilakah waktu berbuka puasa?",
+   "Terbenam matahari",
+   "Terbit fajar",
+   "Masuk waktu Zuhur",
+   "Tengah malam"
+  ],
+  [
+   "Apakah antara perkara yang membatalkan puasa?",
+   "Makan dengan sengaja",
+   "Tidur pada siang hari",
+   "Mandi",
+   "Berkumur tanpa menelan air"
+  ],
+  [
+   "Apakah nama zakat yang ditunaikan berkaitan Ramadan?",
+   "Zakat fitrah",
+   "Zakat tanaman",
+   "Zakat perniagaan",
+   "Zakat ternakan"
+  ],
+  [
+   "Apakah ibadah haji yang dilakukan di Padang Arafah?",
+   "Wukuf",
+   "Tawaf",
+   "Saie",
+   "Melontar jamrah"
+  ]
+ ],
+ "Sirah": [
+  [
+   "Di manakah Nabi Muhammad SAW dilahirkan?",
+   "Makkah",
+   "Madinah",
+   "Taif",
+   "Baitulmaqdis"
+  ],
+  [
+   "Siapakah ibu Nabi Muhammad SAW?",
+   "Aminah binti Wahab",
+   "Khadijah binti Khuwailid",
+   "Fatimah binti Muhammad",
+   "Halimah as-Sa'diyah"
+  ],
+  [
+   "Siapakah ayah Nabi Muhammad SAW?",
+   "Abdullah bin Abdul Muttalib",
+   "Abu Talib",
+   "Abu Bakar",
+   "Hamzah"
+  ],
+  [
+   "Siapakah datuk Nabi Muhammad SAW?",
+   "Abdul Muttalib",
+   "Abu Lahab",
+   "Abu Sufyan",
+   "Bilal"
+  ],
+  [
+   "Siapakah isteri pertama Nabi Muhammad SAW?",
+   "Khadijah",
+   "Aisyah",
+   "Hafsah",
+   "Zainab"
+  ],
+  [
+   "Siapakah sahabat yang menemani Nabi ketika hijrah?",
+   "Abu Bakar",
+   "Umar",
+   "Ali",
+   "Uthman"
+  ],
+  [
+   "Apakah nama gua tempat wahyu pertama diturunkan?",
+   "Gua Hira",
+   "Gua Thur",
+   "Gua Uhud",
+   "Gua Badar"
+  ],
+  [
+   "Ke manakah Nabi Muhammad SAW berhijrah dari Makkah?",
+   "Madinah",
+   "Taif",
+   "Habsyah",
+   "Yaman"
+  ],
+  [
+   "Siapakah bapa saudara yang menjaga Nabi selepas datuknya wafat?",
+   "Abu Talib",
+   "Abu Lahab",
+   "Abbas",
+   "Hamzah"
+  ],
+  [
+   "Apakah gelaran Nabi Muhammad SAW kerana sifat amanahnya?",
+   "Al-Amin",
+   "Al-Faruq",
+   "As-Siddiq",
+   "Zunnurain"
+  ],
+  [
+   "Siapakah ayah Nabi Muhammad SAW?",
+   "Abdullah bin Abdul Muttalib",
+   "Abu Talib",
+   "Abdul Muttalib",
+   "Abu Lahab"
+  ],
+  [
+   "Siapakah datuk Nabi Muhammad SAW?",
+   "Abdul Muttalib",
+   "Abu Talib",
+   "Abdullah",
+   "Hamzah"
+  ],
+  [
+   "Siapakah ibu susuan Nabi Muhammad SAW yang terkenal?",
+   "Halimah as-Sa'diyah",
+   "Aminah binti Wahab",
+   "Khadijah binti Khuwailid",
+   "Fatimah binti Asad"
+  ],
+  [
+   "Apakah nama gua tempat wahyu pertama diturunkan?",
+   "Gua Hira",
+   "Gua Thur",
+   "Gua Uhud",
+   "Gua Safa"
+  ],
+  [
+   "Apakah surah yang mengandungi ayat pertama diturunkan?",
+   "Al-Alaq",
+   "Al-Fatihah",
+   "Al-Ikhlas",
+   "An-Nas"
+  ],
+  [
+   "Siapakah isteri pertama Nabi Muhammad SAW?",
+   "Khadijah binti Khuwailid",
+   "Aisyah binti Abu Bakar",
+   "Hafsah binti Umar",
+   "Ummu Salamah"
+  ],
+  [
+   "Pada usia berapakah Nabi Muhammad SAW menerima wahyu pertama?",
+   "40 tahun",
+   "25 tahun",
+   "35 tahun",
+   "50 tahun"
+  ],
+  [
+   "Apakah gelaran Nabi Muhammad SAW sebelum kerasulan kerana amanahnya?",
+   "Al-Amin",
+   "Al-Faruq",
+   "As-Siddiq",
+   "Zunnurain"
+  ],
+  [
+   "Siapakah lelaki dewasa terawal memeluk Islam?",
+   "Abu Bakar as-Siddiq",
+   "Umar al-Khattab",
+   "Uthman bin Affan",
+   "Abu Sufyan"
+  ],
+  [
+   "Siapakah kanak-kanak terawal memeluk Islam?",
+   "Ali bin Abi Talib",
+   "Zaid bin Harithah",
+   "Abdullah bin Abbas",
+   "Anas bin Malik"
+  ],
+  [
+   "Ke manakah Nabi Muhammad SAW berhijrah dari Makkah?",
+   "Madinah",
+   "Taif",
+   "Yaman",
+   "Habsyah"
+  ],
+  [
+   "Siapakah sahabat yang menemani Nabi ketika hijrah ke Madinah?",
+   "Abu Bakar as-Siddiq",
+   "Umar al-Khattab",
+   "Bilal bin Rabah",
+   "Uthman bin Affan"
+  ],
+  [
+   "Di gua manakah Nabi dan Abu Bakar berlindung ketika hijrah?",
+   "Gua Thur",
+   "Gua Hira",
+   "Gua Uhud",
+   "Gua Safa"
+  ],
+  [
+   "Siapakah yang tidur di tempat Nabi pada malam hijrah?",
+   "Ali bin Abi Talib",
+   "Abu Bakar",
+   "Bilal bin Rabah",
+   "Hamzah"
+  ],
+  [
+   "Apakah nama asal Madinah sebelum hijrah?",
+   "Yathrib",
+   "Taif",
+   "Khaibar",
+   "Badar"
+  ],
+  [
+   "Apakah masjid pertama yang dibina Nabi ketika hijrah?",
+   "Masjid Quba",
+   "Masjid al-Haram",
+   "Masjid al-Aqsa",
+   "Masjid Qiblatain"
+  ],
+  [
+   "Apakah nama peperangan besar pertama antara umat Islam dan Quraisy?",
+   "Perang Badar",
+   "Perang Uhud",
+   "Perang Khandaq",
+   "Perang Hunain"
+  ],
+  [
+   "Pada tahun Hijrah berapakah Perang Badar berlaku?",
+   "2 Hijrah",
+   "1 Hijrah",
+   "3 Hijrah",
+   "5 Hijrah"
+  ],
+  [
+   "Apakah nama perjanjian damai antara umat Islam dan Quraisy pada tahun 6 Hijrah?",
+   "Perjanjian Hudaibiyah",
+   "Piagam Madinah",
+   "Perjanjian Aqabah",
+   "Perjanjian Taif"
+  ],
+  [
+   "Apakah maksud Fathu Makkah?",
+   "Pembukaan Kota Makkah",
+   "Penghijrahan ke Habsyah",
+   "Peperangan di Uhud",
+   "Pembinaan Masjid Quba"
+  ]
+ ],
+ "Jawi": [
+  [
+   "Apakah huruf Jawi bagi bunyi 'pa'?",
+   "ڤ",
+   "ف",
+   "ب",
+   "ت"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ga'?",
+   "ݢ",
+   "ک",
+   "ج",
+   "ق"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'nya'?",
+   "ڽ",
+   "ن",
+   "ي",
+   "م"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ca'?",
+   "چ",
+   "ج",
+   "ح",
+   "خ"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'nga'?",
+   "ڠ",
+   "غ",
+   "ع",
+   "ن"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ba'?",
+   "ب",
+   "ت",
+   "ث",
+   "ن"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ta'?",
+   "ت",
+   "ب",
+   "ث",
+   "ج"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'mim'?",
+   "م",
+   "ن",
+   "ل",
+   "و"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'lam'?",
+   "ل",
+   "م",
+   "ك",
+   "ن"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'sin'?",
+   "س",
+   "ش",
+   "ص",
+   "ث"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'nya'?",
+   "ڽ",
+   "ن",
+   "ي",
+   "ج"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'nga'?",
+   "ڠ",
+   "ع",
+   "غ",
+   "ن"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ca'?",
+   "چ",
+   "ج",
+   "س",
+   "ش"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'va'?",
+   "ۏ",
+   "و",
+   "ف",
+   "ب"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'kaf' Arab?",
+   "ك",
+   "ق",
+   "ڤ",
+   "ݢ"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'qaf' Arab?",
+   "ق",
+   "ك",
+   "غ",
+   "ف"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'syin'?",
+   "ش",
+   "س",
+   "ص",
+   "ث"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'sin'?",
+   "س",
+   "ش",
+   "ص",
+   "ث"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'mim'?",
+   "م",
+   "ن",
+   "ل",
+   "و"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'nun'?",
+   "ن",
+   "م",
+   "ي",
+   "ل"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'lam'?",
+   "ل",
+   "ا",
+   "ك",
+   "م"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ra'?",
+   "ر",
+   "ز",
+   "د",
+   "و"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'zal' (ذ)?",
+   "ذ",
+   "ز",
+   "د",
+   "ر"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'za'?",
+   "ز",
+   "ذ",
+   "ر",
+   "د"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'dal'?",
+   "د",
+   "ذ",
+   "ر",
+   "ز"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ta' (ت)?",
+   "ت",
+   "ط",
+   "ث",
+   "ب"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'tha' (ث)?",
+   "ث",
+   "ت",
+   "س",
+   "ش"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ain'?",
+   "ع",
+   "غ",
+   "ء",
+   "ا"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ghain'?",
+   "غ",
+   "ع",
+   "ق",
+   "خ"
+  ],
+  [
+   "Apakah huruf Jawi bagi bunyi 'ha' (ح)?",
+   "ح",
+   "ه",
+   "خ",
+   "ج"
+  ]
+ ],
+ "Adab": [
+  [
+   "Apakah adab sebelum makan?",
+   "Membaca basmalah",
+   "Membazir makanan",
+   "Makan sambil berlari",
+   "Menghina makanan"
+  ],
+  [
+   "Tangan manakah digalakkan untuk makan?",
+   "Tangan kanan",
+   "Tangan kiri",
+   "Kedua-duanya wajib",
+   "Tiada peraturan"
+  ],
+  [
+   "Apakah adab ketika guru sedang mengajar?",
+   "Mendengar dengan teliti",
+   "Bercakap kuat",
+   "Bermain telefon",
+   "Mengganggu rakan"
+  ],
+  [
+   "Bagaimanakah cara menghormati ibu bapa?",
+   "Bercakap dengan sopan",
+   "Meninggikan suara",
+   "Mengabaikan nasihat",
+   "Mengejek mereka"
+  ],
+  [
+   "Apakah adab masuk ke rumah orang?",
+   "Memberi salam dan meminta izin",
+   "Terus masuk",
+   "Menjerit",
+   "Membuka pintu tanpa izin"
+  ],
+  [
+   "Apakah adab apabila bersin?",
+   "Mengucap alhamdulillah",
+   "Menjerit",
+   "Mengganggu orang",
+   "Mengejek rakan"
+  ],
+  [
+   "Apakah amalan yang baik terhadap jiran?",
+   "Membantu ketika perlu",
+   "Membuat bising",
+   "Menyakiti mereka",
+   "Mengambil barang mereka"
+  ],
+  [
+   "Apakah adab menggunakan tandas?",
+   "Menjaga kebersihan",
+   "Membazir air",
+   "Mengotorkan lantai",
+   "Tidak mengepam"
+  ],
+  [
+   "Bagaimanakah menjaga adab dengan al-Quran?",
+   "Mengendalikannya dengan hormat",
+   "Mencampaknya",
+   "Memijaknya",
+   "Mengoyakkannya"
+  ],
+  [
+   "Apakah adab apabila menerima pertolongan?",
+   "Mengucapkan terima kasih",
+   "Mengejek pembantu",
+   "Bersikap sombong",
+   "Tidak menghargai"
+  ],
+  [
+   "Apakah adab ketika memasuki rumah orang?",
+   "Memberi salam dan meminta izin",
+   "Terus masuk tanpa izin",
+   "Menjerit dari luar",
+   "Membuka pintu sendiri"
+  ],
+  [
+   "Apakah yang patut dilakukan apabila ibu bapa bercakap?",
+   "Mendengar dengan sopan",
+   "Mencelah dengan kasar",
+   "Meninggikan suara",
+   "Berpaling sambil mengejek"
+  ],
+  [
+   "Apakah adab ketika guru sedang mengajar?",
+   "Memberi perhatian",
+   "Berbual kuat",
+   "Bermain telefon",
+   "Mengganggu rakan"
+  ],
+  [
+   "Apakah adab ketika bersin?",
+   "Menutup mulut dan hidung",
+   "Bersin ke arah orang",
+   "Menjerit",
+   "Membiarkan hingus terkena orang"
+  ],
+  [
+   "Apakah ucapan selepas bersin yang diajar dalam Islam?",
+   "Alhamdulillah",
+   "Subhanallah sahaja",
+   "Allahu akbar sahaja",
+   "Astaghfirullah sahaja"
+  ],
+  [
+   "Apakah adab terhadap al-Quran?",
+   "Memegang dan meletakkannya dengan hormat",
+   "Meletakkannya di lantai yang kotor",
+   "Mencampakkannya",
+   "Mencoret ayat sesuka hati"
+  ],
+  [
+   "Apakah tindakan apabila menjumpai barang yang bukan milik kita di sekolah?",
+   "Serahkan kepada guru atau pemiliknya",
+   "Simpan tanpa memberitahu",
+   "Buang barang itu",
+   "Jual barang itu"
+  ],
+  [
+   "Apakah cara menegur kesalahan rakan?",
+   "Dengan baik dan berhikmah",
+   "Menghina di hadapan ramai",
+   "Memaki hamun",
+   "Menyebarkan aib"
+  ],
+  [
+   "Apakah adab ketika bercakap dengan orang lebih tua?",
+   "Menggunakan bahasa sopan",
+   "Menengking",
+   "Memotong percakapan",
+   "Mengejek"
+  ],
+  [
+   "Apakah adab sebelum tidur?",
+   "Membaca doa tidur",
+   "Bergaduh dengan adik",
+   "Membazir makanan",
+   "Meninggalkan lampu tanpa sebab"
+  ],
+  [
+   "Apakah adab bangun daripada tidur?",
+   "Membaca doa bangun tidur",
+   "Memarahi keluarga",
+   "Menjerit",
+   "Merosakkan barang"
+  ],
+  [
+   "Apakah adab ketika berada di masjid?",
+   "Menjaga kebersihan dan ketenangan",
+   "Berlari sambil menjerit",
+   "Membuang sampah",
+   "Mengganggu orang solat"
+  ],
+  [
+   "Apakah tindakan apabila jiran sakit?",
+   "Menziarahi dengan menjaga adab",
+   "Mengejek penyakitnya",
+   "Membuat bising",
+   "Mengabaikannya dengan sengaja"
+  ],
+  [
+   "Apakah contoh amanah?",
+   "Memulangkan barang yang dipinjam",
+   "Menipu pemilik",
+   "Merosakkan barang pinjaman",
+   "Menyembunyikan barang orang"
+  ],
+  [
+   "Apakah contoh sifat jujur?",
+   "Bercakap benar",
+   "Menipu dalam ujian",
+   "Menyembunyikan kesalahan orang lain dengan dusta",
+   "Memalsukan tandatangan"
+  ],
+  [
+   "Apakah adab ketika beratur?",
+   "Menunggu giliran",
+   "Memotong barisan",
+   "Menolak orang",
+   "Berebut tempat"
+  ],
+  [
+   "Apakah yang perlu dibuat apabila tersalah terhadap seseorang?",
+   "Memohon maaf dan memperbaiki kesalahan",
+   "Menyalahkan orang lain",
+   "Mengulangi kesalahan",
+   "Menghina orang itu"
+  ],
+  [
+   "Apakah adab terhadap haiwan?",
+   "Memberi makanan dan tidak menyakitinya",
+   "Menyeksanya",
+   "Membiarkannya lapar dengan sengaja",
+   "Merosakkan tempat tinggalnya"
+  ],
+  [
+   "Apakah adab menggunakan air?",
+   "Menggunakannya tanpa membazir",
+   "Membiarkan paip terbuka",
+   "Membuang air bersih",
+   "Mengotorkan sumber air"
+  ],
+  [
+   "Apakah adab apabila menerima hadiah?",
+   "Mengucapkan terima kasih",
+   "Menghina hadiah",
+   "Membuang hadiah di depan pemberi",
+   "Meminta hadiah lebih mahal"
+  ]
+ ],
+ "Bahasa Arab": [
+  [
+   "Apakah maksud 'كتاب' (kitab)?",
+   "Buku",
+   "Meja",
+   "Pintu",
+   "Kerusi"
+  ],
+  [
+   "Apakah maksud 'قلم' (qalam)?",
+   "Pen",
+   "Buku",
+   "Rumah",
+   "Sekolah"
+  ],
+  [
+   "Apakah maksud 'بيت' (bait)?",
+   "Rumah",
+   "Masjid",
+   "Kelas",
+   "Pasar"
+  ],
+  [
+   "Apakah maksud 'مدرسة' (madrasah)?",
+   "Sekolah",
+   "Hospital",
+   "Kedai",
+   "Rumah"
+  ],
+  [
+   "Apakah maksud 'باب' (bab)?",
+   "Pintu",
+   "Tingkap",
+   "Lantai",
+   "Bumbung"
+  ],
+  [
+   "Apakah maksud 'ماء' (ma')?",
+   "Air",
+   "Susu",
+   "Roti",
+   "Nasi"
+  ],
+  [
+   "Apakah maksud 'شمس' (syams)?",
+   "Matahari",
+   "Bulan",
+   "Bintang",
+   "Awan"
+  ],
+  [
+   "Apakah maksud 'قمر' (qamar)?",
+   "Bulan",
+   "Matahari",
+   "Langit",
+   "Hujan"
+  ],
+  [
+   "Apakah maksud 'أب' (ab)?",
+   "Bapa",
+   "Ibu",
+   "Anak",
+   "Abang"
+  ],
+  [
+   "Apakah maksud 'أم' (umm)?",
+   "Ibu",
+   "Bapa",
+   "Kakak",
+   "Adik"
+  ],
+  [
+   "Apakah maksud 'بيت' (bait)?",
+   "Rumah",
+   "Buku",
+   "Meja",
+   "Pintu"
+  ],
+  [
+   "Apakah maksud 'مدرسة' (madrasah)?",
+   "Sekolah",
+   "Masjid",
+   "Pasar",
+   "Hospital"
+  ],
+  [
+   "Apakah maksud 'مسجد' (masjid)?",
+   "Masjid",
+   "Rumah",
+   "Sekolah",
+   "Kedai"
+  ],
+  [
+   "Apakah maksud 'باب' (bab)?",
+   "Pintu",
+   "Tingkap",
+   "Dinding",
+   "Lantai"
+  ],
+  [
+   "Apakah maksud 'نافذة' (nafizah)?",
+   "Tingkap",
+   "Pintu",
+   "Bumbung",
+   "Kerusi"
+  ],
+  [
+   "Apakah maksud 'كرسي' (kursi)?",
+   "Kerusi",
+   "Meja",
+   "Katil",
+   "Almari"
+  ],
+  [
+   "Apakah maksud 'طاولة' (tawilah)?",
+   "Meja",
+   "Kerusi",
+   "Pintu",
+   "Tingkap"
+  ],
+  [
+   "Apakah maksud 'ماء' (ma')?",
+   "Air",
+   "Susu",
+   "Roti",
+   "Nasi"
+  ],
+  [
+   "Apakah maksud 'خبز' (khubz)?",
+   "Roti",
+   "Air",
+   "Buah",
+   "Ikan"
+  ],
+  [
+   "Apakah maksud 'حليب' (halib)?",
+   "Susu",
+   "Air",
+   "Jus",
+   "Teh"
+  ],
+  [
+   "Apakah maksud 'تفاح' (tuffah)?",
+   "Epal",
+   "Pisang",
+   "Kurma",
+   "Anggur"
+  ],
+  [
+   "Apakah maksud 'موز' (mawz)?",
+   "Pisang",
+   "Epal",
+   "Oren",
+   "Anggur"
+  ],
+  [
+   "Apakah maksud 'تمر' (tamr)?",
+   "Kurma",
+   "Epal",
+   "Pisang",
+   "Tembikai"
+  ],
+  [
+   "Apakah maksud 'شمس' (syams)?",
+   "Matahari",
+   "Bulan",
+   "Bintang",
+   "Awan"
+  ],
+  [
+   "Apakah maksud 'قمر' (qamar)?",
+   "Bulan",
+   "Matahari",
+   "Bintang",
+   "Hujan"
+  ],
+  [
+   "Apakah maksud 'نجم' (najm)?",
+   "Bintang",
+   "Bulan",
+   "Matahari",
+   "Langit"
+  ],
+  [
+   "Apakah maksud 'أب' (ab)?",
+   "Ayah",
+   "Ibu",
+   "Abang",
+   "Adik"
+  ],
+  [
+   "Apakah maksud 'أم' (umm)?",
+   "Ibu",
+   "Ayah",
+   "Kakak",
+   "Nenek"
+  ],
+  [
+   "Apakah maksud 'أخ' (akh)?",
+   "Saudara lelaki",
+   "Saudara perempuan",
+   "Ayah",
+   "Ibu"
+  ],
+  [
+   "Apakah maksud 'أخت' (ukht)?",
+   "Saudara perempuan",
+   "Saudara lelaki",
+   "Datuk",
+   "Bapa saudara"
+  ]
+ ]
+};
+const $=id=>document.getElementById(id);let subject='',questions=[],index=0,score=0,locked=false;
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function home(){$('title').textContent='Pilih Mata Pelajaran';$('description').textContent='Pilih subjek untuk memulakan kuiz. 30 soalan latihan pelbagai tahap bagi setiap subjek.';$('progress').textContent='';$('feedback').textContent='';$('next').classList.add('hidden');$('home').classList.add('hidden');$('content').innerHTML='';Object.keys(bank).forEach(s=>{let b=document.createElement('button');b.className='subject';b.textContent=s+' — '+bank[s].length+' soalan';b.onclick=()=>start(s);$('content').append(b)})}
+function start(s){subject=s;questions=shuffle(bank[s]);index=0;score=0;show()}
+function show(){locked=false;$('feedback').textContent='';$('next').classList.add('hidden');$('home').classList.remove('hidden');$('title').textContent=subject;$('content').innerHTML='';if(index>=questions.length){$('progress').textContent='Tamat';$('description').textContent='Tahniah! Anda telah menamatkan kuiz.';let p=document.createElement('h2');p.textContent='Markah: '+score+' / '+questions.length;$('content').append(p);let b=document.createElement('button');b.className='primary';b.textContent='Cuba Lagi';b.onclick=()=>start(subject);$('content').append(b);return}$('progress').textContent=(index+1)+' / '+questions.length;$('description').textContent=questions[index][0];let q=questions[index],choices=shuffle(q.slice(1));choices.forEach(answer=>{let b=document.createElement('button');b.className='answer';b.textContent=answer;b.onclick=()=>{if(locked)return;locked=true;let correct=answer===q[1];if(correct)score++;document.querySelectorAll('.answer').forEach(el=>{el.disabled=true;if(el.textContent===q[1])el.classList.add('correct');else if(el===b)el.classList.add('wrong')});$('feedback').textContent=correct?'✅ Betul!':'❌ Jawapan betul: '+q[1];$('next').textContent=index===questions.length-1?'Lihat Markah →':'Soalan Seterusnya →';$('next').classList.remove('hidden')};$('content').append(b)})}
+$('next').onclick=()=>{index++;show()};$('home').onclick=home;home();
+</script></body></html>
