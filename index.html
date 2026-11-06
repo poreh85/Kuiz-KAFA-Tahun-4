@@ -1,99 +1,23 @@
-
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kuiz KAFA Tahun 4</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #eaf7ef;
-  text-align: center;
-  padding: 20px;
-}
-h1 { color: #176b43; }
-button {
-  display: block;
-  width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  border: 0;
-  border-radius: 12px;
-  background: #198754;
-  color: white;
-  font-size: 17px;
-}
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-}
-</style>
-</head>
-<body>
-<div class="card">
-<h1>📚 Kuiz KAFA Tahun 4</h1>
-<p id="question"></p>
-<div id="answers"></div>
-<p id="result"></p>
-<p id="score"></p>
-<button onclick="restart()">Mula Semula</button>
-</div>
-<script>
-const questions = [
- {
-  q:"Berapakah rukun Islam?",
-  a:["4","5","6","7"],
-  correct:1
- },
- {
-  q:"Siapakah nabi terakhir?",
-  a:["Nabi Musa","Nabi Isa","Nabi Muhammad","Nabi Adam"],
-  correct:2
- },
- {
-  q:"Apakah kitab yang diturunkan kepada Nabi Muhammad SAW?",
-  a:["Taurat","Zabur","Injil","Al-Quran"],
-  correct:3
- }
-];
-let index=0, score=0;
-function showQuestion(){
- if(index>=questions.length){
-  document.getElementById("question").innerText="Kuiz Tamat!";
-  document.getElementById("answers").innerHTML="";
-  document.getElementById("score").innerText=
-    "Markah: "+score+"/"+questions.length;
-  return;
- }
- const item=questions[index];
- document.getElementById("question").innerText=item.q;
- document.getElementById("result").innerText="";
- document.getElementById("answers").innerHTML="";
- item.a.forEach((answer,i)=>{
-  const btn=document.createElement("button");
-  btn.innerText=answer;
-  btn.onclick=()=>{
-   if(i===item.correct) score++;
-   document.getElementById("result").innerText=
-     i===item.correct?"✅ Betul!":"❌ Salah!";
-   document.querySelectorAll("#answers button")
-     .forEach(b=>b.disabled=true);
-   setTimeout(()=>{
-    index++;
-    showQuestion();
-   },900);
-  };
-  document.getElementById("answers").appendChild(btn);
- });
-}
-function restart(){
- index=0;score=0;
- document.getElementById("score").innerText="";
- showQuestion();
-}
-showQuestion();
-</script>
-</body>
-</html>
+<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kuiz KAFA Tahun 4</title><style>*{box-sizing:border-box}body{margin:0;background:#eaf6ee;color:#163c2b;font-family:Arial,sans-serif}main{max-width:650px;margin:24px auto;padding:18px}.panel{background:white;border-radius:22px;padding:24px;box-shadow:0 8px 30px #165b3020}h1{margin:0 0 8px;color:#12663b}p{line-height:1.5}button{font:inherit;border:0;border-radius:12px;padding:14px;cursor:pointer}button:disabled{opacity:.7;cursor:default}.subject,.answer,.primary{display:block;width:100%;margin:10px 0;text-align:left}.subject{background:#e4f4e9;color:#174b31}.answer{background:#f2f5f3;color:#1c3026;border:2px solid transparent}.answer.correct{background:#d5f7df;border-color:#16803f}.answer.wrong{background:#ffe0df;border-color:#bb3939}.primary{background:#16834b;color:white;text-align:center;font-weight:bold}.muted{color:#5b7365}.top{display:flex;justify-content:space-between;gap:8px;align-items:center}.pill{background:#e4f4e9;padding:8px 12px;border-radius:50px;font-size:13px}.hidden{display:none}.feedback{font-weight:bold;min-height:24px}footer{font-size:12px;text-align:center;color:#65806f;margin:16px}</style></head><body><main><div class="panel"><div class="top"><span class="pill">📚 Latihan KAFA Tahun 4</span><span id="progress" class="muted"></span></div><h1 id="title">Pilih Mata Pelajaran</h1><p id="description" class="muted">Pilih subjek untuk memulakan kuiz.</p><div id="content"></div><p id="feedback" class="feedback" aria-live="polite"></p><button id="next" class="primary hidden">Soalan Seterusnya →</button><button id="home" class="primary hidden">← Pilih Subjek</button></div><footer>Soalan latihan umum untuk ulang kaji; semak kesesuaian dengan silibus sekolah.</footer></main><script>
+// Setiap soalan: [soalan, jawapan betul, pilihan salah 1, pilihan salah 2, pilihan salah 3]
+const bank={
+"Akidah":[
+["Berapakah rukun iman?","6","5","4","7"],["Siapakah malaikat yang menyampaikan wahyu?","Jibril","Mikail","Israfil","Malik"],["Apakah maksud beriman kepada Allah?","Meyakini kewujudan dan keesaan Allah","Mempercayai banyak tuhan","Menyembah makhluk","Mengabaikan perintah Allah"],["Apakah kitab yang diturunkan kepada Nabi Musa AS?","Taurat","Injil","Zabur","Al-Quran"],["Apakah kitab yang diturunkan kepada Nabi Isa AS?","Injil","Taurat","Zabur","Suhuf"],["Apakah kitab yang diturunkan kepada Nabi Daud AS?","Zabur","Injil","Taurat","Al-Quran"],["Apakah kitab yang diturunkan kepada Nabi Muhammad SAW?","Al-Quran","Taurat","Injil","Zabur"],["Apakah maksud sifat wajib Allah 'Wujud'?","Ada","Baharu","Binasa","Lemah"],["Apakah lawan sifat 'Baqa'?","Fana","Qidam","Wujud","Ilmu"],["Apakah rukun iman yang terakhir?","Beriman kepada qada dan qadar","Beriman kepada malaikat","Beriman kepada kitab","Beriman kepada rasul"]],
+"Ibadah":[
+["Berapakah rukun Islam?","5","4","6","7"],["Berapa kali solat fardu sehari semalam?","5","3","4","6"],["Berapakah rakaat solat Subuh?","2","3","4","5"],["Berapakah rakaat solat Maghrib?","3","2","4","5"],["Apakah syarat bersuci sebelum solat?","Suci daripada hadas dan najis","Memakai kasut","Makan dahulu","Tidur dahulu"],["Apakah arah kiblat umat Islam?","Kaabah","Masjid Nabawi","Bukit Uhud","Masjid Al-Aqsa"],["Apakah nama bulan umat Islam diwajibkan berpuasa?","Ramadan","Syawal","Rejab","Muharam"],["Apakah alat bersuci untuk tayamum?","Debu tanah yang suci","Air laut sahaja","Minyak","Daun"],["Apakah perbuatan pertama dalam solat selepas niat?","Takbiratul ihram","Sujud","Tahiyat akhir","Salam"],["Berapakah rakaat solat Isyak?","4","2","3","5"]],
+"Sirah":[
+["Di manakah Nabi Muhammad SAW dilahirkan?","Makkah","Madinah","Taif","Baitulmaqdis"],["Siapakah ibu Nabi Muhammad SAW?","Aminah binti Wahab","Khadijah binti Khuwailid","Fatimah binti Muhammad","Halimah as-Sa'diyah"],["Siapakah ayah Nabi Muhammad SAW?","Abdullah bin Abdul Muttalib","Abu Talib","Abu Bakar","Hamzah"],["Siapakah datuk Nabi Muhammad SAW?","Abdul Muttalib","Abu Lahab","Abu Sufyan","Bilal"],["Siapakah isteri pertama Nabi Muhammad SAW?","Khadijah","Aisyah","Hafsah","Zainab"],["Siapakah sahabat yang menemani Nabi ketika hijrah?","Abu Bakar","Umar","Ali","Uthman"],["Apakah nama gua tempat wahyu pertama diturunkan?","Gua Hira","Gua Thur","Gua Uhud","Gua Badar"],["Ke manakah Nabi Muhammad SAW berhijrah dari Makkah?","Madinah","Taif","Habsyah","Yaman"],["Siapakah bapa saudara yang menjaga Nabi selepas datuknya wafat?","Abu Talib","Abu Lahab","Abbas","Hamzah"],["Apakah gelaran Nabi Muhammad SAW kerana sifat amanahnya?","Al-Amin","Al-Faruq","As-Siddiq","Zunnurain"]],
+"Jawi":[
+["Apakah huruf Jawi bagi bunyi 'pa'?","ڤ","ف","ب","ت"],["Apakah huruf Jawi bagi bunyi 'ga'?","ݢ","ک","ج","ق"],["Apakah huruf Jawi bagi bunyi 'nya'?","ڽ","ن","ي","م"],["Apakah huruf Jawi bagi bunyi 'ca'?","چ","ج","ح","خ"],["Apakah huruf Jawi bagi bunyi 'nga'?","ڠ","غ","ع","ن"],["Apakah huruf Jawi bagi bunyi 'ba'?","ب","ت","ث","ن"],["Apakah huruf Jawi bagi bunyi 'ta'?","ت","ب","ث","ج"],["Apakah huruf Jawi bagi bunyi 'mim'?","م","ن","ل","و"],["Apakah huruf Jawi bagi bunyi 'lam'?","ل","م","ك","ن"],["Apakah huruf Jawi bagi bunyi 'sin'?","س","ش","ص","ث"]],
+"Adab":[
+["Apakah adab sebelum makan?","Membaca basmalah","Membazir makanan","Makan sambil berlari","Menghina makanan"],["Tangan manakah digalakkan untuk makan?","Tangan kanan","Tangan kiri","Kedua-duanya wajib","Tiada peraturan"],["Apakah adab ketika guru sedang mengajar?","Mendengar dengan teliti","Bercakap kuat","Bermain telefon","Mengganggu rakan"],["Bagaimanakah cara menghormati ibu bapa?","Bercakap dengan sopan","Meninggikan suara","Mengabaikan nasihat","Mengejek mereka"],["Apakah adab masuk ke rumah orang?","Memberi salam dan meminta izin","Terus masuk","Menjerit","Membuka pintu tanpa izin"],["Apakah adab apabila bersin?","Mengucap alhamdulillah","Menjerit","Mengganggu orang","Mengejek rakan"],["Apakah amalan yang baik terhadap jiran?","Membantu ketika perlu","Membuat bising","Menyakiti mereka","Mengambil barang mereka"],["Apakah adab menggunakan tandas?","Menjaga kebersihan","Membazir air","Mengotorkan lantai","Tidak mengepam"],["Bagaimanakah menjaga adab dengan al-Quran?","Mengendalikannya dengan hormat","Mencampaknya","Memijaknya","Mengoyakkannya"],["Apakah adab apabila menerima pertolongan?","Mengucapkan terima kasih","Mengejek pembantu","Bersikap sombong","Tidak menghargai"]],
+"Bahasa Arab":[
+["Apakah maksud 'كتاب' (kitab)?","Buku","Meja","Pintu","Kerusi"],["Apakah maksud 'قلم' (qalam)?","Pen","Buku","Rumah","Sekolah"],["Apakah maksud 'بيت' (bait)?","Rumah","Masjid","Kelas","Pasar"],["Apakah maksud 'مدرسة' (madrasah)?","Sekolah","Hospital","Kedai","Rumah"],["Apakah maksud 'باب' (bab)?","Pintu","Tingkap","Lantai","Bumbung"],["Apakah maksud 'ماء' (ma')?","Air","Susu","Roti","Nasi"],["Apakah maksud 'شمس' (syams)?","Matahari","Bulan","Bintang","Awan"],["Apakah maksud 'قمر' (qamar)?","Bulan","Matahari","Langit","Hujan"],["Apakah maksud 'أب' (ab)?","Bapa","Ibu","Anak","Abang"],["Apakah maksud 'أم' (umm)?","Ibu","Bapa","Kakak","Adik"]]
+};
+const $=id=>document.getElementById(id);let subject='',questions=[],index=0,score=0,locked=false;
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function home(){$('title').textContent='Pilih Mata Pelajaran';$('description').textContent='Pilih subjek untuk memulakan kuiz.';$('progress').textContent='';$('feedback').textContent='';$('next').classList.add('hidden');$('home').classList.add('hidden');$('content').innerHTML='';Object.keys(bank).forEach(s=>{let b=document.createElement('button');b.className='subject';b.textContent=s+' — '+bank[s].length+' soalan';b.onclick=()=>start(s);$('content').append(b)})}
+function start(s){subject=s;questions=shuffle(bank[s]);index=0;score=0;show()}
+function show(){locked=false;$('feedback').textContent='';$('next').classList.add('hidden');$('home').classList.remove('hidden');$('title').textContent=subject;$('content').innerHTML='';if(index>=questions.length){$('progress').textContent='Tamat';$('description').textContent='Tahniah! Anda telah menamatkan kuiz.';let p=document.createElement('h2');p.textContent='Markah: '+score+' / '+questions.length;$('content').append(p);let b=document.createElement('button');b.className='primary';b.textContent='Cuba Lagi';b.onclick=()=>start(subject);$('content').append(b);return}$('progress').textContent=(index+1)+' / '+questions.length;$('description').textContent=questions[index][0];let q=questions[index],choices=shuffle(q.slice(1));choices.forEach(answer=>{let b=document.createElement('button');b.className='answer';b.textContent=answer;b.onclick=()=>{if(locked)return;locked=true;let correct=answer===q[1];if(correct)score++;document.querySelectorAll('.answer').forEach(el=>{el.disabled=true;if(el.textContent===q[1])el.classList.add('correct');else if(el===b)el.classList.add('wrong')});$('feedback').textContent=correct?'✅ Betul!':'❌ Jawapan betul: '+q[1];$('next').textContent=index===questions.length-1?'Lihat Markah →':'Soalan Seterusnya →';$('next').classList.remove('hidden')};$('content').append(b)})}
+$('next').onclick=()=>{index++;show()};$('home').onclick=home;home();
+</script></body></html>
